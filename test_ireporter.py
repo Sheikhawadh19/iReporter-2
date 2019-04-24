@@ -20,47 +20,47 @@ class IreporterTestCase(unittest.TestCase):
 
     def test_ireporter_creation(self):
         """Test API can create a bucketlist (POST request)"""
-        res = self.client().post('/ireporters/', data=self.ireporter)
+        res = self.client().post('/API/V1/Ireporter/', data=self.ireporter)
         self.assertEqual(res.status_code, 201)
         self.assertIn('Go to Borabora', str(res.data))
 
     def test_api_can_get_all_ireporters(self):
         """Test API can get a bucketlist (GET request)."""
-        res = self.client().post('/ireporters/', data=self.ireporter)
+        res = self.client().post('/API/V1/Ireporter/', data=self.ireporter)
         self.assertEqual(res.status_code, 201)
-        res = self.client().get('/ireporters/')
+        res = self.client().get('/API/V1/Ireporter/')
         self.assertEqual(res.status_code, 200)
         self.assertIn('Go to Borabora', str(res.data))
 
     def test_api_can_get_ireporter_by_id(self):
       
-        rv = self.client().post('/ireporters/', data=self.ireporter)
+        rv = self.client().post('/API/V1/Ireporter/', data=self.ireporter)
         self.assertEqual(rv.status_code, 201)
         result_in_json = json.loads(rv.data.decode('utf-8').replace("'", "\""))
         result = self.client().get(
-            '/ireporters/{}'.format(result_in_json['id']))
+            '/Ireporter/{}'.format(result_in_json['id']))
         self.assertEqual(result.status_code, 200)
         self.assertIn('Go to Borabora', str(result.data))
 
     def test_ireporter_can_be_edited(self):
        
         rv = self.client().post(
-            '/ireporters/',
+            '/API/V1/Ireporter/',
             data={'name': 'Eat, pray and love'})
         self.assertEqual(rv.status_code, 201)
         rv = self.client().put(
-            '/ireporters/1',
+            '/API/V1/Ireporter/1',
             data={
                 "name": "Dont just eat, but also pray and love :-)"
             })
         self.assertEqual(rv.status_code, 200)
-        results = self.client().get('/ireporters/1')
+        results = self.client().get('/API/V1/Ireporter/1')
         self.assertIn('Dont just eat', str(results.data))
 
     def test_bucketlist_deletion(self):
         """Test API can delete an existing bucketlist. (DELETE request)."""
         rv = self.client().post(
-            '/ireporter/',
+            '/API/V1/Ireporter/',
             data={'name': 'Eat, pray and love'})
         self.assertEqual(rv.status_code, 201)
         res = self.client().delete('/ireporters/1')
