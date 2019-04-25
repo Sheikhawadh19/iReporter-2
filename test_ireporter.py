@@ -38,7 +38,7 @@ class IreporterTestCase(unittest.TestCase):
         self.assertEqual(rv.status_code, 201)
         result_in_json = json.loads(rv.data.decode('utf-8').replace("'", "\""))
         result = self.client().get(
-            '/Ireporter/{}'.format(result_in_json['id']))
+            '/API/V1/Ireporter/{}'.format(result_in_json['id']))
         self.assertEqual(result.status_code, 200)
         self.assertIn('Go to Borabora', str(result.data))
 
@@ -63,10 +63,10 @@ class IreporterTestCase(unittest.TestCase):
             '/API/V1/Ireporter/',
             data={'name': 'Eat, pray and love'})
         self.assertEqual(rv.status_code, 201)
-        res = self.client().delete('/ireporters/1')
+        res = self.client().delete('/API/V1/Ireporter/1')
         self.assertEqual(res.status_code, 200)
         # Test to see if it exists, should return a 404
-        result = self.client().get('/ireporters/1')
+        result = self.client().get('/API/V1/Ireporter/1')
         self.assertEqual(result.status_code, 404)
 
     def tearDown(self):
