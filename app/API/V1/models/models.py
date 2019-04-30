@@ -13,13 +13,15 @@ class User(db.Model):
     # Define the columns of the users table, starting with the primary key
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(256), nullable=False, unique=True)
+    username = db.Column(db.String(256), nullable=False, unique=True)
     password = db.Column(db.String(256), nullable=False)
+    confirm_password = db.Column(db.String(256), nullable=False)
     irecords = db.relationship(
-        'Ireporter', order_by='Ireporter.id', cascade="all, delete-orphan")
+        'ireporter', order_by='ireporter.id', cascade="all, delete-orphan")
 
-    def __init__(self, email, password):
+    def __init__(self, username, password):
         """Initialize the user with an email and a password."""
-        self.email = email
+        self.username = username
         self.password = Bcrypt().generate_password_hash(password).decode()
 
     def password_is_valid(self, password):

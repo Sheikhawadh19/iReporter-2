@@ -6,6 +6,7 @@ from instance.config import app_config
 
 # initialize sql-alchemy
 db = SQLAlchemy()
+
 from flask import request, jsonify, abort
 
 def create_app(config_name):
