@@ -19,13 +19,13 @@ class IreporterTestCase(unittest.TestCase):
             db.create_all()
 
     def test_ireporter_creation(self):
-        """Test API can create a bucketlist (POST request)"""
+        """Test API can create a irecord (POST request)"""
         res = self.client().post('/API/V1/Ireporter/', data=self.ireporter)
         self.assertEqual(res.status_code, 201)
         self.assertIn('Go to Borabora', str(res.data))
 
     def test_api_can_get_all_ireporters(self):
-        """Test API can get a bucketlist (GET request)."""
+        """Test API can get a irecord (GET request)."""
         res = self.client().post('/API/V1/Ireporter/', data=self.ireporter)
         self.assertEqual(res.status_code, 201)
         res = self.client().get('/API/V1/Ireporter/')
@@ -58,7 +58,7 @@ class IreporterTestCase(unittest.TestCase):
         self.assertIn('Dont just eat', str(results.data))
 
     def test_bucketlist_deletion(self):
-        """Test API can delete an existing bucketlist. (DELETE request)."""
+        """Test API can delete an existing irecord. (DELETE request)."""
         rv = self.client().post(
             '/API/V1/Ireporter/',
             data={'name': 'Eat, pray and love'})

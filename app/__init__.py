@@ -93,7 +93,9 @@ def create_app(config_name):
             })
             response.status_code = 200
             return response
-
+            
+    from .API.V1.views import auth_blueprint
+    app.register_blueprint(auth_blueprint)
    
 
     return app
