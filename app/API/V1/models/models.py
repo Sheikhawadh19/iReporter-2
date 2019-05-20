@@ -16,8 +16,8 @@ class User(db.Model):
     username = db.Column(db.String(256), nullable=False, unique=True)
     password = db.Column(db.String(256), nullable=False)
     confirm_password = db.Column(db.String(256), nullable=False)
-    irecords = db.relationship(
-        'ireporter', order_by='ireporter.id', cascade="all, delete-orphan")
+    #irecords = db.relationship('Ireporter', order_by='Ireporter.id', cascade="all, delete-orphan")
+    irecords = db.relationship('Ireporter',backref = 'ireporter')
 
     def __init__(self, email, password):
         """Initialize the user with an email and a password."""
@@ -85,9 +85,9 @@ class Ireporter(db.Model):
     email = db.Column(db.String(255))
     comment = db.Column(db.String(255))
     date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
-    date_modified = db.Column(
-        db.DateTime, default=db.func.current_timestamp(),
-        onupdate=db.func.current_timestamp())
+    date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),onupdate=db.func.current_timestamp())
+    created_by = db.Column(db.Integer, db.ForeignKey(User.id))
+
 
     def __init__(self, name):
         """initialize with name."""
